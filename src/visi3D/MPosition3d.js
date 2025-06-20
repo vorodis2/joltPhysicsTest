@@ -309,7 +309,7 @@ export default function MPosition3d (_parent, _content2d, _div) {
 		}
 		//delta*=-1
 
-		if(self.pScane.setZoom(delta)==true){
+		if(self.pScane.setZoom(delta) == true){
 			return;
 		}
 		

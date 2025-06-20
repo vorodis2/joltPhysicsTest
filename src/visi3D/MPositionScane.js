@@ -176,7 +176,7 @@ export class MPositionScane {
 			
 			//this.m3d.distance
 
-			
+			trace("=================",this.par.par.zume,this.m3d.distance,this.m3d,na )
 
 
 			this.dee1();
@@ -186,7 +186,7 @@ export class MPositionScane {
 
 			this.startMause();
 
-			//trace("=================",this.par.par.zume,this.m3d.distance,this.m3d )
+			
 			return true;
 		}
 
@@ -198,7 +198,7 @@ export class MPositionScane {
 			scale=this.m3d.distance/this.skalP
 			this.meshSphere.scale.set(scale,scale,scale)
 		
-			
+			trace("====dd==",dist )	
 			this.zumP(dist)
 
 
@@ -258,6 +258,9 @@ export class MPositionScane {
 			point2.y=point0.y-point1.y;
 			point2.z=point0.z-point1.z;
 			self.par.par.zume=oT.zumeOld;
+			
+
+
 			/*self.par.par.xVerh=self.par.par.xVerh/oZ+point2.x;
 			self.par.par.yVerh=self.par.par.yVerh/oZ-point2.y;
 			self.par.par.zVerh=self.par.par.zVerh/oZ+point2.z;*/

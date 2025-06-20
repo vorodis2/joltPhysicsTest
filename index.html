@@ -6,12 +6,15 @@
     <title>JoltPhysics js 3d</title>
     <script src='src/lib/divLib.js'></script>
     <script src='src/lib/jquery-1.11.3.js'></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-30708630-1"></script>
 </head>
 <meta name="viewport" content="width=device-width,height=device-height,user-scalable=no user-scalable=no, minimum-scale=1.0, maximum-scale=1.0" />
 <script type="module">
     import Stats from './src/lib/stats.module.js';
 	//import Stats from 'three/addons/libs/stats.module.js';
-	var dcmParam, stats,dCont1,gallety,panel,dCont2,dCont3,iframe,editor,buttonNa,bZam,bZam1,bZam2,panel1;
+	var dcmParam, stats,dCont1,gallety,panel,dCont2,dCont3,iframe,editor,bZam,bZam1,bZam2,panel1,panel2,label;
+
+	
 	//var trace = window.console.log.bind(window.console);
 	var otstup=2;
 
@@ -19,21 +22,17 @@
 	var boolCod1=false;
 	const style = document.createElement('style');
 	  style.textContent = `
-	    #editor {
-	      width: 100%;
-	      height: 300px;
+	    #editor {	      
 	      font-family: monospace;
 	      font-size: 10px;
 	      background: #fefefe;
 	      color: #848484;
 	      border: 1px solid #ccc;
-	      padding: 10px;
+	      padding: 3px;
 	      white-space: pre-wrap;
 	      overflow: auto;
 	    }
-	    .keyword { color: #569CD6; font-weight: bold; }
-	    .string  { color: #CE9178; }
-	    .comment { color: #6A9955; font-style: italic; }
+	   
 	  `;
 	  document.head.appendChild(style)
 
@@ -44,16 +43,26 @@
 		var h = document.documentElement.clientHeight;
 			
 
-		gallety.height=h-otstup*2
+		gallety.height=h-otstup*2-96
 
-		dCont1.x=otstup*2;
-		dCont1.y=h-otstup*2-50;
+
+
+
+		dCont1.x=otstup;
+		dCont1.y=h-otstup*2-45;
+
 		dCont2.x=gallety.width+otstup*2;
 		dCont2.y=otstup;
 
+
+ 
 		if(boolCod==false){
+			
+
 			panel.width=Math.round(w-dCont2.x-otstup);
 			panel.height=Math.round(h-otstup*2);
+
+
 
 		}else{
 			let ww=w-dCont2.x-otstup*2
@@ -64,17 +73,17 @@
 			dCont3.y=otstup;
 			panel1.width=Math.round(ww/2-otstup);
 			panel1.height=Math.round(h-otstup*2);
-			buttonNa.width=panel1.width-otstup*2
-			let hh=(otstup*2+buttonNa.height)
+			//buttonNa.width=panel1.width-otstup*2
+			let hh=(otstup*2 )
 			editor.style.left = (otstup)+'px';
         	editor.style.top = hh+'px';
-        	editor.style.width=Math.round(panel1.width-otstup*2-24)+"px";
+        	editor.style.width=Math.round(panel1.width-otstup*4)+"px";
         	editor.style.height=(h-hh-otstup*8)+"px";
 
 		}		
 
-
-
+		panel2.width=panel.width
+		label.width=panel2.width-otstup*2
 
 
 
@@ -91,7 +100,12 @@
 
 		bZam1.x=bZam.x-bZam.width-otstup*2
 		bZam2.x=bZam1.x-bZam.width-otstup*2
+
+		ggggg()	
+
 	}
+
+
 
 	function upDate() {
 		stats.update();
@@ -99,10 +113,27 @@
 
 	}
 
+	function ggggg() {
+		for (var i = 0; i < gallety.array.length; i++) {
+			gallety.array[i].image.y=otstup	
+			gallety.array[i].label.textAlign='left'
+			gallety.array[i].label.fontSize=10;
+			gallety.array[i].label.x=2;
+			gallety.array[i].label.y=gallety.array[i].image.height+otstup*2		
+		}
+	}
+
 
 	function init(t){
 		let a=[];
 
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+
+		gtag('config', 'UA-30708630-1');
+
+		
 		if(getURLParameters('a')){
 			boolCod = true
 			boolCod1 = true;
@@ -120,7 +151,7 @@
             			if(aa[i]!=='index.html'){            				
 							let aaa=aa[i].split('.')
 	            			if(aaa[aaa.length-1]=='html'){  
-	            				a.push({title:aaa[0], link:aa[i]})
+	            				a.push({title:aaa[0], link:aa[i],src:"resources/icon/"+aaa[0]+'.png'})
 	            			}
             			}            			
             		} 
@@ -146,17 +177,42 @@
 		let dCont=new DCont(contentHTML)
 
 
+        let pp=new DPanel(dCont)
+        	
+        let bb=new DButton(pp, otstup,otstup," ",function(){
+       
+        	window.open(window.location.origin);
+        
+
+        },'resources/icon/sss.png')	
+
+        bb.scalePic=0.20
+        bb.boolFond=false
+        pp.height=45
+
+        let ll=new DLabel(pp,otstup,otstup*2+bb.height,"vorodis2@gmail.com")
+        ll.fontSize=10
 
 
-		gallety = new DGallery(dCont,otstup,otstup,function(){
+		gallety = new DGallery(dCont,otstup, pp.height+otstup*2,function(){
 			setIndex(gallety.index)
 		});
-		gallety.width=94;
+		gallety.width=104;
 		gallety.widthPic=gallety.width-otstup*2
-		gallety.heightPic=20
+		gallety.heightPic=gallety.width+10
+
+		pp.width=gallety.width
+
+
 		gallety.otstup=otstup
 		gallety.kolII=1
 		gallety.start(a);
+
+
+		ggggg()
+		setTimeout(ggggg,1)		
+		setTimeout(ggggg,300)
+		setTimeout(ggggg,1000)
 
 		stats = new Stats();
 		stats.setMode(0);
@@ -168,8 +224,14 @@
 		
 
 		///////////
-		dCont2=new DCont(dCont)		
-		panel=new DPanel(dCont2)
+		dCont2=new DCont(dCont)	
+		panel2=new DPanel(dCont2)	
+		label=new DLabel(panel2,otstup,panel2,"---a gas sdgasfdgf adsgfgf as--")
+		label.fontSize=10
+		panel2.height=(label.fontSize)*2+otstup*2		
+		panel=new DPanel(dCont2,0,panel2.height+otstup)
+
+
 
 
 
@@ -186,16 +248,7 @@
 		dCont3 = new DCont(dCont)
 		panel1=new DPanel(dCont3)
 
-		buttonNa=new DButton(panel1, otstup,otstup,"apply",function(){
-			buttonNa.activMouse=false;
 
-			const code = editor.textContent;
-			const blob = new Blob([code], { type: 'text/html' });
-			const url = URL.createObjectURL(blob);
-			iframe.src = url;
-
-		})
-		buttonNa.activMouse=false
 
         editor = document.createElement('div');
         editor.style.position = 'fixed';
@@ -211,7 +264,7 @@
   		// Подсвечиваем при изменении (можно debounce)
 		editor.addEventListener('input', () => {
 		   //setTimeout(highlight, 50);
-			buttonNa.activMouse=true
+			//buttonNa.activMouse=true
 		});	
 
 		// Вставка таба и автоотступ
@@ -245,9 +298,10 @@
   		bZam.image.alpha=0.5
   		bZam.otPic=5
 
-  		
+
   		bZam1=new DButton(dCont, 0,0," ",function(){
-			
+			let s='https://github.com/vorodis2/joltPhysicsTest/blob/main/'+arrayParm[gallety.index].link;
+			window.open(s);
 		},'resources/image/2.svg')
 		bZam1.wh=32
 		bZam1.borderRadius=bZam1.wh/2
@@ -257,7 +311,11 @@
   		bZam1.otPic=5
 
   		bZam2=new DButton(dCont, 0,0," ",function(){
-			window.open('https://practicum.yandex.ru/');
+
+  			var sURL = window.document.URL.toString();
+			let aa=sURL.split("?");
+			let s = aa[0]+""+arrayParm[gallety.index].link;  			
+			window.open(s);
 		},'resources/image/3.svg')
 		bZam2.wh=32
 		bZam2.borderRadius=bZam2.wh/2
@@ -275,13 +333,39 @@
         		}
         	}
         }
+
+
+
+
+   
+
+
+
+
+
         dragBC()
         setIndex(pos)
 		upDate()
 		setTimeout(function() {sizeWindow()}, 10);
 		window.onresize = sizeWindow;
-		sizeWindow();		
+		sizeWindow();	
+
+
 	}
+
+
+	async function getTitleFromHtml(url) {
+	  const response = await fetch(url);
+	  const htmlText = await response.text();
+
+	  const parser = new DOMParser();
+	  const doc = parser.parseFromString(htmlText, "text/html");
+
+	  const title = doc.querySelector("title");
+	  return title ? title.textContent : null;
+	}
+
+
 
 	function dragBC() {
 
@@ -296,7 +380,11 @@
 	function setIndex(ii){	
 		gallety.index=ii;		
 		iframe.src=arrayParm[ii].link;
-		buttonNa.activMouse=false
+
+
+
+
+	//	buttonNa.activMouse=false
 		$.ajax({
 		    type:    "GET",
 		    url:     arrayParm[ii].link,
@@ -304,7 +392,7 @@
 		    
 		        editor.textContent =text
 		        highlight()	
-		        buttonNa.activMouse=false
+		//        buttonNa.activMouse=false
 		    },
 		    error:   function() {
 		        // An error occurred
@@ -313,7 +401,18 @@
 
 		creatUrl()
 		
-
+		// Пример использования:
+		getTitleFromHtml(iframe.src).then(title => {
+		  	console.log("Title:", title);
+		  	label.text=title;
+		  	setTimeout(function() {
+		  		let hh=label.getRect().height+otstup;
+		  		panel2.height=hh	
+				panel.y=panel2.height+otstup
+				sizeWindow();
+				ggggg()
+		  	}, 10);
+		});
 	}
 
 	function creatUrl(){
@@ -376,7 +475,7 @@
 
   // Простой парсер для подсветки
   function highlight() {
-    let text = editor.textContent;
+    /*let text = editor.textContent;
 
     // Экранируем HTML
     text = text
@@ -398,7 +497,7 @@
    
     // Обновляем HTML
     editor.innerHTML = text;
-    placeCursorAtEnd(editor);
+    placeCursorAtEnd(editor);*/
   }
 
   
